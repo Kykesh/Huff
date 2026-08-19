@@ -1,0 +1,39 @@
+# ── Huff workspace ──────────────────────────────────────────────────────────
+# This repo versions the WORKSPACE-LEVEL assets: the agent charters, the
+# routing CLAUDE.md, the Money kit, and Channel Lab. It deliberately does NOT
+# swallow the application projects — they are 43G/5.8G/3.4G of databases and
+# two of them already have their own git history.
+
+# Projects with their OWN repositories — never nest them here.
+/trading_personal/
+/trading-os/
+
+# Heavy application projects (databases, renders, node_modules).
+# Random Project alone carries a ~15G SQLite file; Faceless carries renders.
+/Random Project/
+/Faceless/
+
+# Budget app: track the source, never the data or deps.
+/Huff House Budget/node_modules/
+/Huff House Budget/data/
+
+# Machine-local Claude state — settings.local.json holds per-machine paths and
+# permissions, and command/session artefacts are not shared assets.
+.claude/settings.local.json
+
+# OS / editor noise
+.DS_Store
+**/.DS_Store
+*.log
+
+# Never version data or secrets, anywhere, at any depth.
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.sqlite
+**/*.sqlite3
+**/backups/

@@ -1,0 +1,15 @@
+{
+  "python.envFile": "${workspaceFolder}/Faceless/.env",
+  "python.terminal.activateEnvironment": true,
+
+  "terminal.integrated.profiles.osx": {
+    "zsh (Faceless .env)": {
+      "path": "zsh",
+      "args": [
+        "-c",
+        "set -a; [ -f '${workspaceFolder}/Faceless/.env' ] && source '${workspaceFolder}/Faceless/.env'; set +a; exec zsh -i -l"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "zsh (Faceless .env)"
+}

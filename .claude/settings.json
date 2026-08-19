@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -m 2 http://localhost:3008/api/build-info)",
+      "Bash(python3 -c ' *)",
+      "Bash(NODE_OPTIONS=--max-old-space-size=3072 npx tsx scripts/edge-gojo-mastery.ts)",
+      "Bash(sqlite3 data/trading.db \"DELETE FROM gojo_mastery WHERE status='unmastered'; SELECT changes\\(\\)\")"
+    ]
+  }
+}

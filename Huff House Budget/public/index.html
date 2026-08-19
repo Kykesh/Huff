@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Huff Budget</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar nav. Hash-based router — no full page loads. -->
+    <aside class="sidebar">
+      <div class="brand"><span class="dot"></span> Huff Budget</div>
+      <div class="clock" id="clock" title="America/Chicago"></div>
+      <nav class="nav">
+        <a href="#/dashboard"    data-route="/dashboard"><span class="ic">◎</span>Dashboard</a>
+        <a href="#/income"       data-route="/income"><span class="ic">↑</span>Income</a>
+        <a href="#/expenses"     data-route="/expenses"><span class="ic">↓</span>Expenses</a>
+        <a href="#/savings"      data-route="/savings"><span class="ic">★</span>Savings Goals</a>
+        <a href="#/credit-cards" data-route="/credit-cards"><span class="ic">▣</span>Credit Cards</a>
+        <a href="#/reports"      data-route="/reports"><span class="ic">≡</span>Reports</a>
+      </nav>
+      <div class="footer">
+        <button class="btn" id="btn-snapshot">Save monthly snapshot</button>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <div class="loading">Loading…</div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
