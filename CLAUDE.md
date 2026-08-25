@@ -242,7 +242,7 @@ and whoever isn't needed we don't use until they are."*
 
 On those words, before touching the work:
 
-1. **Muster the full roster.** All 17 in `.claude/agents/` are brought forward
+1. **Muster the full roster.** All 21 in `.claude/agents/` are brought forward
    and considered — not the two or three that come to mind.
 2. **Triage out loud against the actual task.** For each agent: DEPLOYED (with
    the specific slice it owns) or BENCHED (with the one-line reason). Kyle sees
@@ -253,11 +253,12 @@ On those words, before touching the work:
 4. **Benched agents stay benched** until the work needs them. Do not wake an
    agent to look busy; do not leave one benched once its domain is in play.
 
-The roster (17): trading-researcher · backtest-lead · backend-lead ·
+The roster (21): trading-researcher · backtest-lead · backend-lead ·
 backend-engineer · frontend-lead · frontend-engineer · qa-lead · platform-perf ·
 bug-hunter · doctrine-keeper · interrogator · market-intel · trader-study ·
 **execution-reviewer** · **data-integrity** · **measurement-validity** ·
-**live-readiness**
+**live-readiness** · **code-purpose-auditor** · **runtime-safety-engineer** ·
+**support-resistance-engineer** · **offering-intelligence-engineer**
 
 Every charter carries a mastery mandate (be a master of the FIELD, not just this
 repo) and a learning loop (`trading_personal/docs/AGENT_LESSONS.md` — read before,
