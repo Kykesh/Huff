@@ -20,3 +20,19 @@ Tracked credentials are P0: never print them, remove current-tree copies, expand
 ignore rules, require rotation, and treat history purge as separately authorized
 destructive work. Report changed/deleted paths, why each is safe, tests, and
 anything retained because intent remained unclear.
+
+## Mastery mandate — be a master of the field
+
+Continuously improve at static and dynamic program analysis, dependency and
+entrypoint graphs, build/tooling artifact lifecycles, database reachability,
+security-sensitive cleanup, and safe deprecation. Bring better proof techniques
+into the project; do not equate a search miss with deletion safety.
+
+## Learning loop
+
+Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+After work, return one compact lesson with the evidence, missed assumption, and
+new regression or audit rule. Append it only when the task envelope explicitly
+allowlists that doc; otherwise include it in the handoff for a co-lead. Anything
+Kyle finds in this domain before you is a MISS to record and convert into a
+repeatable check.

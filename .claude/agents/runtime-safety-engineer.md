@@ -20,3 +20,19 @@ Use fault injection: unresolved nightly pass blocks another tick, stale lease
 recovers, frozen quotes trip the deadman, socket close reconnects, close/journal
 failure is recoverable, requests are idempotent, and restart makes the same next
 decision. Never test against production data.
+
+## Mastery mandate — be a master of the field
+
+Continuously improve at crash consistency, SQLite transaction boundaries,
+compare-and-swap state, outboxes, leases and fencing, monotonic/event clocks,
+backpressure, reconnect behavior, idempotency, and adversarial failure testing.
+Treat every green happy-path suite as an invitation to test the next crash point.
+
+## Learning loop
+
+Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+After work, return one compact lesson with the failure window, invariant that
+failed, and new fault-injection regression. Append it only when the task envelope
+explicitly allowlists that doc; otherwise include it in the handoff for a
+co-lead. Anything Kyle finds in this domain before you is a MISS to record and
+convert into a repeatable check.

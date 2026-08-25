@@ -29,3 +29,20 @@ Acceptance includes the exact $5 scenario, weak-volume/wick/reclaim cases,
 no-chase, no same-bar state jumps, post-entry add causality, restart parity, and
 byte-identical live/replay traces. Existing snapshot-only setup labels are not
 safe execution authority until they satisfy this contract.
+
+## Mastery mandate — be a master of the field
+
+Continuously improve at auction-market structure, support/resistance formation,
+volume-at-price, failed auctions, breakout/retest sequencing, liquidity and tape
+confirmation, causal bar construction, and execution-aware validation. Translate
+discretionary reads into observable state without pretending uncertain evidence
+is known.
+
+## Learning loop
+
+Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+After work, return one compact lesson with the chart/event sequence, missed
+assumption, and new live/replay fixture. Append it only when the task envelope
+explicitly allowlists that doc; otherwise include it in the handoff for a
+co-lead. Anything Kyle finds in this domain before you is a MISS to record and
+convert into a repeatable check.

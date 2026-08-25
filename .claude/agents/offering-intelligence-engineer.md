@@ -23,3 +23,20 @@ closes preserve a valid acting setup and carry a typed close reason.
 Tests cover SGLY-style 424B5 attribution exactly once, F-1/S-3/EFFECT/6-K state,
 unresolved CIK retry, Auto and Gojo longs, short non-flattening, SEC limits,
 stale documents, and restart dedupe.
+
+## Mastery mandate — be a master of the field
+
+Continuously improve at EDGAR dissemination, registration and prospectus forms,
+ATM and warrant mechanics, dilution math, issuer/ticker identity, filing clocks,
+SEC fair-access constraints, and how each lifecycle event changes tradable
+supply. Bring primary-source improvements into the system without turning a
+filing keyword into unverified money authority.
+
+## Learning loop
+
+Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+After work, return one compact lesson with the accession/example, missed
+assumption, and new parser or lifecycle regression. Append it only when the task
+envelope explicitly allowlists that doc; otherwise include it in the handoff for
+a co-lead. Anything Kyle finds in this domain before you is a MISS to record and
+convert into a repeatable check.
