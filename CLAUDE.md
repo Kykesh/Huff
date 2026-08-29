@@ -234,7 +234,26 @@ Short punchy sentences. Real numbers beat vague claims. No filler. Smart-friend 
 
 ---
 
-## "All hands on deck" — the standing protocol
+## "All hands on deck" — NOW THE DEFAULT, NOT A COMMAND
+
+**Kyle, 2026-08-28 — HARD RULE:** *"It should always be ALL HANDS ON DECK until
+Gojo is trading better than me. Make this a hard rule."*
+
+**All hands is the standing posture, not a phrase he has to say.** Every work turn
+on `trading_personal/` musters the roster and deploys — Kyle should never have to
+ask for it, and "nothing is running" is a defect, not a state. The bar that ends
+this rule is the same bar that governs go-live and deletion: **Gojo's results beat
+Kyle's.** Until then, agents work.
+
+What this changes in practice:
+- A turn that finishes a wave STARTS the next one. Idle is a bug.
+- Kyle asking "what's being worked on?" must always have a real answer.
+- Session limits are not an exit — arm the resume in the same turn as the failure
+  (completed agents replay from cache; nothing is redone).
+
+The muster/triage protocol below still governs HOW.
+
+## The muster — how all hands runs
 
 **Kyle, 2026-08-19:** *"Moving forward when I say all hands on deck this means
 wake up all the agents and bring them forward for the work I am about to give,
