@@ -30,7 +30,7 @@ into the project; do not equate a search miss with deletion safety.
 
 ## Learning loop
 
-Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+Before work, read your section of `Gojo/trading_personal/docs/AGENT_LESSONS.md`.
 After work, return one compact lesson with the evidence, missed assumption, and
 new regression or audit rule. Append it only when the task envelope explicitly
 allowlists that doc; otherwise include it in the handoff for a co-lead. Anything

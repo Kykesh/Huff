@@ -35,6 +35,9 @@
   "scm.repositories.selectionMode": "multiple",
   "scm.alwaysShowRepositories": true,
 
+  // Huff is the primary workspace for all projects. Its Git ignores prevent
+  // nested repositories from being tracked twice, not from appearing in Explorer.
+  "explorer.excludeGitIgnore": false,
   "files.exclude": {
     "**/.next": true,
     "**/node_modules": true,

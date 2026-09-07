@@ -2,6 +2,10 @@
 
 ## Workspace layout
 
+Huff remains the primary workspace for all projects. Gojo is the priority;
+the other projects remain available for reference and reuse, subject to their
+existing per-project rules below.
+
 ```
 Huff/
 ├── CLAUDE.md                        ← you are here (workspace root)
@@ -10,8 +14,11 @@ Huff/
 ├── Channel Lab/                     ← niche scouting for future faceless channels (/scout)
 ├── Huff House Budget/               ← personal budget tracker (Node/Express/SQLite, port 3001)
 ├── Random Project/                  ← Powerball combination manager (Node/Express/SQLite, port 3000)
-├── trading-os/                      ← AI trading coach, SaaS edition (clone pending — see below)
-└── trading_personal/                ← Trading Edge PERSONAL edition (Next.js/SQLite, port 3008) — the active trading project
+├── trading-os/                      ← AI trading coach, SaaS edition; core/main Git worktree
+└── Gojo/                            ← active Gojo project and its three role worktrees
+    ├── trading_personal/            ← personal/development worktree
+    ├── gojo_stage/                  ← staging worktree
+    └── gojo_prod/                   ← production worktree
 ```
 
 ---
@@ -121,11 +128,11 @@ AI trading coach, journal, and pre-market planner — "Trading Edge" (placeholde
 - `Money/03_agent_team/automated_pipeline/` (`/ship`) — feature work, but respect this repo's GitHub Flow (develop → main)
 - `Money/05_memory_vault/` — per-user training data and market context compounds well here
 
-### trading_personal (`trading_personal/`)
+### trading_personal (`Gojo/trading_personal/`)
 **Trading Edge — personal edition.** Kyle's ACTIVE day-trading cockpit: AI coach,
 journal, pre-market planner, and a live paper-trading Terminal for short-biased
 small-cap trading. Single-user, runs 100% locally (SQLite); only AI calls leave
-the device. **Read `trading_personal/README.md` + `docs/` first for any work here.**
+the device. **Read `Gojo/trading_personal/README.md` + `docs/` first for any work here.**
 
 **Stack:** Next.js (App Router) + TypeScript · SQLite (`data/trading.db`) ·
 multi-provider AI (Anthropic/Groq/Gemini) · Python analytics sidecar (`analytics/`).
@@ -197,9 +204,9 @@ Both apps have auto-backup logic — confirm it's running before any bulk DB ope
 |---|---|
 | Feature for Budget app | `Huff House Budget/` claude.md → then `Money/03_agent_team/automated_pipeline/` if complex |
 | Feature for Powerball app | `Random Project/` CLAUDE.md → then `Money/03_agent_team/automated_pipeline/` if complex |
-| Feature for trading-os (SaaS) | `trading-os/` CLAUDE.md (once cloned) → `Money/03_agent_team/automated_pipeline/` for complex work |
-| Feature for Kyle's own trading cockpit | `trading_personal/` README + `docs/` — this is the default for "my terminal / montage / premarket / coach" requests |
-| Trade planning / strategy | `trading_personal/` + `Money/02_prompt_library/07_council_skill.md` for key decisions |
+| Feature for trading-os (SaaS) | `trading-os/` CLAUDE.md → `Money/03_agent_team/automated_pipeline/` for complex work |
+| Feature for Kyle's own trading cockpit | `Gojo/trading_personal/` README + `docs/` — this is the default for "my terminal / montage / premarket / coach" requests |
+| Trade planning / strategy | `Gojo/trading_personal/` + `Money/02_prompt_library/07_council_skill.md` for key decisions |
 | Faceless channel work (videos, calendar, pipeline) | `Faceless/README.md` → `/produce <topic>` for video production |
 | New channel idea / niche evaluation / "is X worth it?" | `/scout <niche or URL>` → `Channel Lab/` |
 | YouTube policy / monetization questions | `Money/04_youtube_starter_kit/05_policy_compliance.md` |
@@ -240,7 +247,7 @@ Short punchy sentences. Real numbers beat vague claims. No filler. Smart-friend 
 Gojo is trading better than me. Make this a hard rule."*
 
 **All hands is the standing posture, not a phrase he has to say.** Every work turn
-on `trading_personal/` musters the roster and deploys — Kyle should never have to
+on `Gojo/trading_personal/` musters the roster and deploys — Kyle should never have to
 ask for it, and "nothing is running" is a defect, not a state. The bar that ends
 this rule is the same bar that governs go-live and deletion: **Gojo's results beat
 Kyle's.** Until then, agents work.
@@ -280,5 +287,5 @@ bug-hunter · doctrine-keeper · interrogator · market-intel · trader-study ·
 **support-resistance-engineer** · **offering-intelligence-engineer**
 
 Every charter carries a mastery mandate (be a master of the FIELD, not just this
-repo) and a learning loop (`trading_personal/docs/AGENT_LESSONS.md` — read before,
+repo) and a learning loop (`Gojo/trading_personal/docs/AGENT_LESSONS.md` — read before,
 append after; anything Kyle finds first is a recorded MISS).

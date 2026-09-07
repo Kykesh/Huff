@@ -1,4 +1,9 @@
-# Gojo workspace
+# Gojo inside the Huff workspace
+
+Keep **Huff** open as the main Visual Studio Code workspace. It contains all of
+Kyle's projects; Gojo has priority, and the other projects remain available for
+reference and deliberate reuse. No project needs to be moved into Gojo or
+removed from Huff to work this way.
 
 This directory is the single local home for Gojo's three operating roles. The
 roles are linked Git worktrees of the same `trading-os` repository; they are not
@@ -19,21 +24,25 @@ nested worktree contents so Git history is never duplicated.
 
 ## See every Source Control repository
 
-In Visual Studio Code, open `Gojo.code-workspace`, not the plain `Gojo/`
-container. The workspace explicitly registers personal, stage, production, and
-core as four repositories.
+In Visual Studio Code, keep the existing **Huff** window open, or open the
+`/Users/kylehuffsr./Documents/GitHub/Huff` folder. Its `.vscode/settings.json`
+explicitly discovers the three repositories under `Gojo/` and the core
+`trading-os/` repository alongside Huff itself. The Source Control Repositories
+view supports selecting multiple repositories so their pending changes can be
+shown together. Explorer keeps the actual `Huff/Gojo/<role>` folder hierarchy
+and the other Huff projects.
 
-In the ChatGPT desktop app's Codex view, add a local project with the exact
-`trading_personal`, `gojo_stage`, and `gojo_prod` folders. Git controls belong to
-each local project/worktree, so a project still pointing to the former absolute
-path cannot follow the move automatically.
+`Gojo.code-workspace` is an optional focused view of those same worktrees. Its
+named top-level entries are display aliases, not different folders or copies.
+That is why its Explorer looks different; it is not the preferred workspace
+and is not required for Gojo development or Source Control visibility.
 
 Pending development changes belong only in `trading_personal`. They should not
 also appear in `gojo_prod`; production receives a reviewed exact commit only
 through the promotion workflow. To audit all roles without changing anything:
 
 ```bash
-./workspace-status.sh
+./Gojo/workspace-status.sh
 ```
 
 Never stage the outer `Gojo/` tree recursively, copy personal files into

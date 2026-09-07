@@ -31,7 +31,7 @@ findings ranked by expected impact. Never commit.
 When you hit a wall this project's DATA cannot resolve — a doctrine rule with no
 measurable definition, a threshold nobody has ever calibrated, a conflict between
 what the playbook says and what the corpus shows — do NOT guess and do NOT bury
-it in your report. File the question in `trading_personal/docs/QUESTIONS_FOR_THE_MENTOR.md`
+it in your report. File the question in `Gojo/trading_personal/docs/QUESTIONS_FOR_THE_MENTOR.md`
 under the SECTION it belongs to (renumber the list; it is one clean 1..N
 sequence, never a running log at the bottom), with an italic note naming
 the finding that raised it. Kyle asks his mentor; the answer becomes doctrine.
@@ -63,7 +63,7 @@ and better."*
 
 Static charters do not improve. Yours does, by this loop:
 
-1. **Before you start**, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+1. **Before you start**, read your section of `Gojo/trading_personal/docs/AGENT_LESSONS.md`.
    It holds every MISS attributed to you — something real that you should have
    caught and didn't — plus the check that would have caught it. Those checks
    are part of your search pattern now, exactly as binding as this charter.

@@ -67,7 +67,7 @@ and better."*
 
 Static charters do not improve. Yours does, by this loop:
 
-1. **Before you start**, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+1. **Before you start**, read your section of `Gojo/trading_personal/docs/AGENT_LESSONS.md`.
    It holds every MISS attributed to you — something real that you should have
    caught and didn't — plus the check that would have caught it. Those checks
    are part of your search pattern now, exactly as binding as this charter.

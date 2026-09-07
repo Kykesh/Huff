@@ -30,7 +30,7 @@ Treat every green happy-path suite as an invitation to test the next crash point
 
 ## Learning loop
 
-Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+Before work, read your section of `Gojo/trading_personal/docs/AGENT_LESSONS.md`.
 After work, return one compact lesson with the failure window, invariant that
 failed, and new fault-injection regression. Append it only when the task envelope
 explicitly allowlists that doc; otherwise include it in the handoff for a

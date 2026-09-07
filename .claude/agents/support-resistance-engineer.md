@@ -40,7 +40,7 @@ is known.
 
 ## Learning loop
 
-Before work, read your section of `trading_personal/docs/AGENT_LESSONS.md`.
+Before work, read your section of `Gojo/trading_personal/docs/AGENT_LESSONS.md`.
 After work, return one compact lesson with the chart/event sequence, missed
 assumption, and new live/replay fixture. Append it only when the task envelope
 explicitly allowlists that doc; otherwise include it in the handoff for a
