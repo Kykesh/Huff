@@ -1,15 +1,52 @@
 {
-  "python.envFile": "${workspaceFolder}/Faceless/.env",
+  // CEO-58 (Kyle, 2026-09-06): "faceless youtube was a random project… do what needs to be
+  // done for Gojo to have priority." Gojo's interpreter is the workspace default; the
+  // Faceless env/terminal stays available as a named profile, not the default.
+  "python.defaultInterpreterPath": "/Users/kylehuffsr./.local/gojo-venv/bin/python",
   "python.terminal.activateEnvironment": true,
 
+  // Pylance was indexing two full copies of the trader (gojo_prod, gojo_stage), two
+  // virtualenvs (Faceless/.venv 5,891 .py files; trading_personal/analytics/models/.venv
+  // 2,665), node_modules and .next — hence the constant notifications. None of that is
+  // source. Exclude it from analysis, from the file tree and from the watcher.
+  "python.analysis.exclude": [
+    "**/node_modules/**", "**/.venv/**", "**/venv/**", "**/site-packages/**",
+    "**/.next/**", "**/data/**", "**/dist/**", "**/build/**",
+    "gojo_prod/**", "gojo_stage/**", "trading_personal/analytics/models/.venv/**"
+  ],
+  "python.analysis.indexing": true,
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.analysis.extraPaths": ["trading_personal", "trading_personal/analytics"],
+
+  "files.exclude": {
+    "gojo_stage": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.venv": true
+  },
+  "files.watcherExclude": {
+    "**/gojo_prod/**": true,
+    "**/gojo_stage/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/.venv/**": true,
+    "**/data/**": true,
+    "**/__pycache__/**": true
+  },
+  "search.exclude": {
+    "gojo_prod": true, "gojo_stage": true, "**/node_modules": true, "**/.next": true, "**/.venv": true, "**/data": true
+  },
+
   "terminal.integrated.profiles.osx": {
+    "zsh (Gojo venv)": {
+      "path": "zsh",
+      "args": ["-c", "export PYTHON_BIN=/Users/kylehuffsr./.local/gojo-venv/bin/python; export PATH=/Users/kylehuffsr./.local/gojo-venv/bin:$PATH; exec zsh -i -l"]
+    },
     "zsh (Faceless .env)": {
       "path": "zsh",
-      "args": [
-        "-c",
-        "set -a; [ -f '${workspaceFolder}/Faceless/.env' ] && source '${workspaceFolder}/Faceless/.env'; set +a; exec zsh -i -l"
-      ]
+      "args": ["-c", "set -a; [ -f '${workspaceFolder}/Faceless/.env' ] && source '${workspaceFolder}/Faceless/.env'; set +a; exec zsh -i -l"]
     }
   },
-  "terminal.integrated.defaultProfile.osx": "zsh (Faceless .env)"
+  "terminal.integrated.defaultProfile.osx": "zsh (Gojo venv)"
 }
