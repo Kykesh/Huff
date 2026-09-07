@@ -19,13 +19,8 @@
   ],
   "settings": {
     "git.autoRepositoryDetection": true,
-    "git.repositoryScanMaxDepth": 2,
-    "git.scanRepositories": [
-      "trading_personal",
-      "gojo_stage",
-      "gojo_prod",
-      "../trading-os"
-    ],
+    "git.repositoryScanMaxDepth": 0,
+    "git.scanRepositories": [],
     "scm.repositories.selectionMode": "multiple",
     "scm.alwaysShowRepositories": true,
     "python.defaultInterpreterPath": "/Users/kylehuffsr./.local/gojo-venv/bin/python",

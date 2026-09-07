@@ -12,7 +12,7 @@ show_worktree() {
   branch="$(git -C "$path" symbolic-ref --quiet --short HEAD || printf '%s' '(detached)')"
   remote="$(git -C "$path" remote get-url origin 2>/dev/null || printf '%s' '(no origin)')"
   upstream="$(git -C "$path" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || printf '%s' '(none)')"
-  counts="$(git -C "$path" status --short | awk '
+  counts="$(git -C "$path" status --short --untracked-files=all | awk '
     BEGIN { modified = 0; untracked = 0; staged = 0 }
     /^\?\?/ { untracked += 1; next }
     {
