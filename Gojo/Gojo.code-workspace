@@ -1,0 +1,53 @@
+{
+  "folders": [
+    {
+      "name": "Gojo — Personal (development)",
+      "path": "trading_personal"
+    },
+    {
+      "name": "Gojo — Stage (detached)",
+      "path": "gojo_stage"
+    },
+    {
+      "name": "Gojo — Production (detached)",
+      "path": "gojo_prod"
+    },
+    {
+      "name": "Gojo — Core/main",
+      "path": "../trading-os"
+    }
+  ],
+  "settings": {
+    "git.autoRepositoryDetection": true,
+    "git.repositoryScanMaxDepth": 2,
+    "git.scanRepositories": [
+      "trading_personal",
+      "gojo_stage",
+      "gojo_prod",
+      "../trading-os"
+    ],
+    "scm.repositories.selectionMode": "multiple",
+    "scm.alwaysShowRepositories": true,
+    "python.defaultInterpreterPath": "/Users/kylehuffsr./.local/gojo-venv/bin/python",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "files.exclude": {
+      "**/.next": true,
+      "**/node_modules": true,
+      "**/__pycache__": true,
+      "**/.venv": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/.next/**": true,
+      "**/.venv/**": true,
+      "**/data/**": true,
+      "**/__pycache__/**": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.next": true,
+      "**/.venv": true,
+      "**/data": true
+    }
+  }
+}

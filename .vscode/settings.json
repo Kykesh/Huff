@@ -7,27 +7,41 @@
 
   // Pylance was indexing two full copies of the trader (gojo_prod, gojo_stage), two
   // virtualenvs (Faceless/.venv 5,891 .py files; trading_personal/analytics/models/.venv
-  // 2,665), node_modules and .next — hence the constant notifications. None of that is
-  // source. Exclude it from analysis, from the file tree and from the watcher.
+  // 2,665), node_modules and .next — hence the constant notifications. Keep all
+  // worktree roots visible for Source Control while excluding heavy/generated contents.
   "python.analysis.exclude": [
     "**/node_modules/**", "**/.venv/**", "**/venv/**", "**/site-packages/**",
     "**/.next/**", "**/data/**", "**/dist/**", "**/build/**",
-    "gojo_prod/**", "gojo_stage/**", "trading_personal/analytics/models/.venv/**"
+    "Gojo/gojo_prod/**", "Gojo/gojo_stage/**",
+    "Gojo/trading_personal/analytics/models/.venv/**"
   ],
   "python.analysis.indexing": true,
   "python.analysis.diagnosticMode": "openFilesOnly",
-  "python.analysis.extraPaths": ["trading_personal", "trading_personal/analytics"],
+  "python.analysis.extraPaths": [
+    "Gojo/trading_personal",
+    "Gojo/trading_personal/analytics"
+  ],
+
+  // The three Gojo roles moved from depth 1 to depth 2 on 2026-09-07. Scan
+  // their exact paths so Source Control keeps each linked worktree visible.
+  "git.autoRepositoryDetection": "subFolders",
+  "git.repositoryScanMaxDepth": 3,
+  "git.scanRepositories": [
+    "Gojo/trading_personal",
+    "Gojo/gojo_stage",
+    "Gojo/gojo_prod",
+    "trading-os"
+  ],
+  "scm.repositories.selectionMode": "multiple",
+  "scm.alwaysShowRepositories": true,
 
   "files.exclude": {
-    "gojo_stage": true,
     "**/.next": true,
     "**/node_modules": true,
     "**/__pycache__": true,
     "**/.venv": true
   },
   "files.watcherExclude": {
-    "**/gojo_prod/**": true,
-    "**/gojo_stage/**": true,
     "**/node_modules/**": true,
     "**/.next/**": true,
     "**/.venv/**": true,
@@ -35,7 +49,7 @@
     "**/__pycache__/**": true
   },
   "search.exclude": {
-    "gojo_prod": true, "gojo_stage": true, "**/node_modules": true, "**/.next": true, "**/.venv": true, "**/data": true
+    "**/node_modules": true, "**/.next": true, "**/.venv": true, "**/data": true
   },
 
   "terminal.integrated.profiles.osx": {

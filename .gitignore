@@ -4,9 +4,13 @@
 # swallow the application projects — they are 43G/5.8G/3.4G of databases and
 # two of them already have their own git history.
 
-# Projects with their OWN repositories — never nest them here.
-/trading_personal/
+# Projects with their OWN repositories — never absorb their working trees into
+# the Huff workspace repository. Gojo's small workspace manifest is tracked;
+# its four Git worktrees remain owned by the separate trading-os repository.
 /trading-os/
+/Gojo/trading_personal/
+/Gojo/gojo_stage/
+/Gojo/gojo_prod/
 
 # Heavy application projects (databases, renders, node_modules).
 # Random Project alone carries a ~15G SQLite file; Faceless carries renders.
