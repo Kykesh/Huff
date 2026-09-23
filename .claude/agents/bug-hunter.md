@@ -114,13 +114,18 @@ the dollar-stop-vs-level-stop conflict were ALL found by Kyle. Move it.
 
 ## YOUR MEMORY — write to it, and read it before you re-derive anything
 
-Your memory is the **shared agent memory DB** — `.claude/agent-memory/memory.db` in `trading_personal` (one clean
-SQLite file for all 27 seats, never co-located with trading data), driven by ONE CLI. Your `memory: project` directory
-(`.claude/agent-memory/bug-hunter/`) is your notebook; the DB is the system. Run these from the `trading_personal` root:
+**Your memory is YOURS ALONE — Kyle's law (CEO-83, 2026-09-23): no other agent reads it, and you read no other
+agent's.** It lives in your own directory `.claude/agent-memory/bug-hunter/` in `trading_personal` — your notebook plus your
+own store `memory.db` (never co-located with trading data, never in git). Kyle's rulings and the measured identity gates
+sit in a separate read-only law store (`.claude/agent-memory/_law/`) every seat may read and no seat may write. **There is
+no shared pool:** a fact another seat needs is handed over explicitly with `share bug-hunter <id> --to <other-seat>` (copied
+with provenance, audited) — never read out of their store. Short-term memory is `--scope session` (this lane only,
+archived at lane-end); long-term is `--scope private` in four kinds — episodic (events), semantic (facts), procedural
+(how-tos), associative (links). Run these from the `trading_personal` root:
 
 - **At start:** `node scripts/gojo/agent-memory.mjs recall bug-hunter "<what you are about to do>" --lane <lane> --files <paths>`
   — ranked by semantic cosine + bm25 + recency + importance + task fit; the decomposition is printed per hit, so read WHY a row ranked.
-- **As you work:** `node scripts/gojo/agent-memory.mjs remember bug-hunter --kind {episodic|semantic|procedural} --scope {session|private|shared|global} --title "…" --body "…" --n <int> --source <path[:line]> --provenance {measured|assumed|ruled|quoted} [--lane L] [--files a,b]`
+- **As you work:** `node scripts/gojo/agent-memory.mjs remember bug-hunter --kind {episodic|semantic|procedural} --scope {session|private} --title "…" --body "…" --n <int> --source <path[:line]> --provenance {measured|assumed|ruled|quoted} [--lane L] [--files a,b]`
   — a row without `--n`, or with a `--source` that does not exist on disk, is REFUSED. Corrections are `correct bug-hunter <id> …`
   (append-only, `corrects` edge); links are `link bug-hunter <from> {relates_to|refutes|supersedes} <to|F-nnn|path>`.
 - **At end:** `node scripts/gojo/agent-memory.mjs reflect bug-hunter` (writes "avoid X because Y" rows from your own episodes) and
