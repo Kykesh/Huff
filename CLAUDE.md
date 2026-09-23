@@ -258,6 +258,16 @@ What this changes in practice:
 - Session limits are not an exit — arm the resume in the same turn as the failure
   (completed agents replay from cache; nothing is redone).
 
+**Kyle, 2026-09-23 17:0x — the definition, verbatim:** *"when I say all hands it means
+all agents wake up and complete all their task and work towards gojo trading better than
+me and refining gojo and our money flow and systems etc"* — and *"we had more agents
+working in the background."* So all hands is not "the seats this task needs": it is
+**every seat draining its OWN queue** (its OPEN rows in `docs/FINDINGS_QUEUE.md`, its
+todos in `docs/todo/`, its lens of the current study) at the same time as the task wave,
+each item run as a §10 loop to FIXED or HOLD-needs-information, results returned as
+ledger text so a session limit loses nothing. Two waves in flight is the floor, not the
+ceiling; the muster below decides WHO is on the task wave, never who is idle.
+
 The muster/triage protocol below still governs HOW.
 
 ## The muster — how all hands runs
