@@ -268,6 +268,11 @@ each item run as a §10 loop to FIXED or HOLD-needs-information, results returne
 ledger text so a session limit loses nothing. Two waves in flight is the floor, not the
 ceiling; the muster below decides WHO is on the task wave, never who is idle.
 
+**Kyle, 2026-09-24 02:4x — verbatim:** *"dont stop anywork for battery it stays connectted to
+charger snd continue all work"* — lanes are never paused for the battery; the host stays on
+the charger. A runaway process that stops the host charging is still killed (F-645), but the
+wave keeps running.
+
 The muster/triage protocol below still governs HOW.
 
 ## The muster — how all hands runs
