@@ -4,7 +4,26 @@
       "Bash(curl -s -m 2 http://localhost:3008/api/build-info)",
       "Bash(python3 -c ' *)",
       "Bash(NODE_OPTIONS=--max-old-space-size=3072 npx tsx scripts/edge-gojo-mastery.ts)",
-      "Bash(sqlite3 data/trading.db \"DELETE FROM gojo_mastery WHERE status='unmastered'; SELECT changes\\(\\)\")"
+      "Bash(sqlite3 data/trading.db \"DELETE FROM gojo_mastery WHERE status='unmastered'; SELECT changes\\(\\)\")",
+      "Edit(//Users/kylehuffsr./Documents/GitHub/Huff/Gojo/trading_personal/docs/PROMOTE_STOP.json)",
+      "Write(//Users/kylehuffsr./Documents/GitHub/Huff/Gojo/trading_personal/docs/PROMOTE_STOP.json)",
+      "Bash(npm run gojo:promote:*)",
+      "Bash(node scripts/gojo/promote.mjs:*)",
+      "Bash(curl -s -X POST http://localhost:3008/api/settings/flags:*)"
+
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p '/Users/kylehuffsr./Documents/GitHub/Huff/Gojo/trading_personal/docs/kyle-inbox' && /usr/bin/jq -c '{ts: (now|todate), session_id, cwd, prompt}' >> '/Users/kylehuffsr./Documents/GitHub/Huff/Gojo/trading_personal/docs/kyle-inbox/inbox.jsonl' 2>/dev/null; exit 0",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   }
 }

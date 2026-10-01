@@ -41,3 +41,10 @@
 **/*.sqlite
 **/*.sqlite3
 **/backups/
+
+# Gojo runtime data, never source (2026-10-01; Kyle: "when is the huff repo going to get cleaned up").
+# Moved-out prod data (the 09-25 build-surface moves), promote rollback builds, and agent memory notes that
+# landed at the Gojo root instead of trading_personal's per-seat stores (T-review-lead-010 owns that drift).
+/Gojo/.gojo-prod-data/
+/Gojo/.gojo-rollback-store/
+/Gojo/.claude/

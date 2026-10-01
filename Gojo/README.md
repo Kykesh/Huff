@@ -47,3 +47,18 @@ through the promotion workflow. To audit all roles without changing anything:
 
 Never stage the outer `Gojo/` tree recursively, copy personal files into
 production, or run `git add .` from the `Huff` repository.
+
+## Current documentation for every Gojo environment
+
+The [environment documentation hub](trading_personal/docs/structure/environments/README.md)
+provides the full, separately versioned sets:
+
+- [Development: current project index](trading_personal/docs/DOCS_INDEX.md).
+- [Stage: architecture, code map, ownership and file catalog](trading_personal/docs/structure/environments/stage/DOCS_INDEX.md).
+- [Production: architecture, code map, ownership and file catalog](trading_personal/docs/structure/environments/production/DOCS_INDEX.md).
+
+These role-specific guides are maintained centrally in the working documentation.
+They describe the actual versions inspected, not three identical environments.
+Their existence does **not** mean they have been committed or published into
+stage/production. Follow the [refresh/publication contract](trading_personal/docs/structure/environments/REFRESH.md);
+no direct copying into frozen roles or automatic synchronization is enabled.
