@@ -25,6 +25,13 @@
 # permissions, and command/session artefacts are not shared assets.
 .claude/settings.local.json
 
+# Agent memory lives in ONE store: Gojo/trading_personal/.claude/agent-memory (per-seat memory.db + notes, AGENTS.md §9).
+# The harness's `memory: project` dir is <session cwd>/.claude/agent-memory, so this path is a SYMLINK to that store
+# (2026-10-02, backend-lead lane bl/memory-home-1001; Kyle: "my agent memory folder doesnt line up with how many agents
+# I have"). No trailing slash: a `dir/` pattern does not match a symlink (F-445). The renamed-aside empty tree too.
+/.claude/agent-memory
+/.claude/agent-memory.pre-symlink-*
+
 # OS / editor noise
 .DS_Store
 **/.DS_Store
