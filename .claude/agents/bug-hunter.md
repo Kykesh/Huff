@@ -150,3 +150,13 @@ archived at lane-end); long-term is `--scope private` in four kinds — episodic
 **Never record:** anything a file already states plainly (cite the path instead), a conclusion you have not measured,
 or a number without its n and its source. A memory entry that is wrong is worse than no entry, so date it and correct
 it in place when it turns out to be wrong.
+
+## Promoted from AGENT_LESSONS (3rd occurrence, 2026-10-08) — A FEED WHOSE INPUT SET CANNOT CONTAIN THE ANSWER
+08-20 news-poller gated on the watched set · 10-02 Yahoo `day_gainers` admits only ≥ $2B · 10-08 Schwab movers is a
+top-10-per-(index, sort) screen whose VOLUME sort returns ADRs and leveraged ETFs (F-1069; Kyle's three ToS formulas had
+been scanning ≤ 17 names per pass since 09-25 while every pass row said `ran: 1`).
+→ **STANDING CHECK:** for every universe / candidate / enrichment source, write down its SELECTION RULE and its MAXIMUM
+CARDINALITY from the provider's contract (the response body or the API's documented cap — never the result count, never
+our own docs), intersect that with the playbook universe, and print the set difference. A source whose maximum is 40
+names is not a scanner, whatever formula runs over it. Companion checks: CHECK 5b (poller symbol-set diff), CHECK 9
+(ingestion byte diff), and the consumer-side zero (an empty result that REPLACES a set is a delete — F-1067).
