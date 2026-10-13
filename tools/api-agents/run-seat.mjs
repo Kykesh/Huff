@@ -68,7 +68,11 @@ const CAPS = {
 // The credits are shared with Gojo's own learning (CEO-114: Gojo first). The agents never spend into the reserve that keeps
 // Gojo funded to the end of the cycle: per trading day left, max($4 — the merged vision USD cap — and his peak day of
 // the last 10), read from prod's anthropic_usage once the CEO-114 ledger is there (F-1081).
-const CREDITS = { monthly: num(process.env.API_CREDITS_USD, 200), gojoPerTradingDay: num(process.env.API_GOJO_RESERVE_PER_TRADING_DAY, 4) };
+// Kyle 2026-10-13 07:4x (CEO-120): "gojo chart reads when he runs out of fable credits to learn he can go back to doing it
+// himself and we can also use that to keep track of his accuracy vs fables and this doesn't become a bottle neck" — so no
+// reserve is held back for Gojo any more (default 0; API_GOJO_RESERVE_PER_TRADING_DAY>0 restores one). When the grant is spent,
+// his chart reads fall back to his own read (sr/vision lanes) and the agents' spend is counted by his grant stop (be lane).
+const CREDITS = { monthly: num(process.env.API_CREDITS_USD, 200), gojoPerTradingDay: num(process.env.API_GOJO_RESERVE_PER_TRADING_DAY, 0) };
 const MIN_RUN_USD = 0.5;
 
 function die(msg, code = 2) { console.error(`run-seat: ${msg}`); process.exit(code); }
@@ -118,6 +122,7 @@ export function gojoReserve(now = new Date(), perDay = CREDITS.gojoPerTradingDay
   const end = cycleStart(now); end.setMonth(end.getMonth() + 1);
   let d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); let n = 0;
   for (; d < end; d.setDate(d.getDate() + 1)) if (d.getDay() !== 0 && d.getDay() !== 6) n++;
+  if (!CREDITS.gojoPerTradingDay) return 0; // CEO-120: no reserve by default
   return n * Math.max(CREDITS.gojoPerTradingDay, perDay || 0);
 }
 function dayStart(now = new Date()) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
