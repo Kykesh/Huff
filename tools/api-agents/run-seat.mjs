@@ -19,8 +19,9 @@
  *                         [--max-usd <n>] [--max-turns <n>] [--dry-run]
  *   node run-seat.mjs status
  *
- * Budget (USD, env-overridable): API_AGENTS_MONTHLY_USD (default 50) per credit cycle (cycles start on the 2nd, the day
- * the monthly credit lands), API_AGENTS_DAILY_USD (15), API_AGENTS_RUN_USD (6). The SDK gets
+ * Budget (USD, env-overridable): API_AGENTS_MONTHLY_USD (default 150, Kyle 10-12) per credit cycle (cycles start on the 2nd, the day
+ * the monthly credit lands), API_AGENTS_DAILY_USD (50), API_AGENTS_RUN_USD (10), and never into the reserve that keeps Gojo's
+ * chart reads funded to the cycle end ($4 per trading day left). The SDK gets
  * maxBudgetUsd = min(run cap, what is left today, what is left this cycle) and stops the run itself at that figure.
  * Gojo's own learning (chart reads, planner) draws on the same credits and comes first (CEO-114); the agent cap is the
  * share the agents may take.
@@ -52,11 +53,15 @@ const MODEL_IDS = { opus: 'claude-opus-5-5', fable: 'claude-fable-5-1', sonnet: 
 const DEFAULT_API_MODEL = MODEL_IDS.opus;
 const KNOWN_TOOLS = new Set(['Bash', 'Read', 'Write', 'Edit', 'Grep', 'Glob', 'WebSearch', 'WebFetch', 'NotebookEdit']);
 const num = (v, d) => (v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d);
+// Kyle, 2026-10-12 21:2x: "no until gojo is trading better than me make the api cap 150$ and get those api agents to work now".
 const CAPS = {
-  monthly: num(process.env.API_AGENTS_MONTHLY_USD, 50),
-  daily: num(process.env.API_AGENTS_DAILY_USD, 15),
-  run: num(process.env.API_AGENTS_RUN_USD, 6),
+  monthly: num(process.env.API_AGENTS_MONTHLY_USD, 150),
+  daily: num(process.env.API_AGENTS_DAILY_USD, 50),
+  run: num(process.env.API_AGENTS_RUN_USD, 10),
 };
+// The credits are shared with Gojo's own learning (CEO-114: Gojo first). The agents never spend into the reserve that keeps
+// Gojo's chart reads funded to the end of the cycle: $4 per trading day left (the merged vision USD cap's default).
+const CREDITS = { monthly: num(process.env.API_CREDITS_USD, 200), gojoPerTradingDay: num(process.env.API_GOJO_RESERVE_PER_TRADING_DAY, 4) };
 const MIN_RUN_USD = 0.5;
 
 function die(msg, code = 2) { console.error(`run-seat: ${msg}`); process.exit(code); }
@@ -99,6 +104,13 @@ export function cycleStart(now = new Date()) {
   if (now < s) s.setMonth(s.getMonth() - 1);
   return s;
 }
+/** Trading days (Mon–Fri) from tomorrow to the next cycle start — what Gojo's reads still need. */
+export function gojoReserve(now = new Date()) {
+  const end = cycleStart(now); end.setMonth(end.getMonth() + 1);
+  let d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); let n = 0;
+  for (; d < end; d.setDate(d.getDate() + 1)) if (d.getDay() !== 0 && d.getDay() !== 6) n++;
+  return n * CREDITS.gojoPerTradingDay;
+}
 function dayStart(now = new Date()) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
 
 function ledgerRows() {
@@ -130,6 +142,7 @@ function status() {
   console.log(`  agents on API:    $${cyc.toFixed(2)} of $${CAPS.monthly} this cycle · $${day.toFixed(2)} of $${CAPS.daily} today · ${rows.filter((r) => new Date(r.ts) >= cs).length} runs`);
   console.log(gojo ? `  Gojo chart reads: $${gojo.usd.toFixed(2)} (${gojo.reads} reads) — prod, read-only` : '  Gojo chart reads: prod DB unreadable');
   console.log('  Gojo planner:     not ledgered on prod until the CEO-114 spend guard is promoted');
+  console.log(`  reserve kept for Gojo's reads to the cycle end: $${gojoReserve(now).toFixed(2)} of the $${CREDITS.monthly} credits`);
 }
 
 async function run(a) {
@@ -147,8 +160,10 @@ async function run(a) {
   const rows = ledgerRows(); const now = new Date();
   const leftCycle = CAPS.monthly - spent(rows, cycleStart(now));
   const leftDay = CAPS.daily - spent(rows, dayStart(now));
-  const runCap = Math.min(num(a['max-usd'], CAPS.run), CAPS.run, leftCycle, leftDay);
-  const plan = { seat: a.seat, model, effort, tools, cwd, max_usd: Number(runCap.toFixed(2)), left_cycle: Number(leftCycle.toFixed(2)), left_day: Number(leftDay.toFixed(2)), charter_sha256: ch.sha256.slice(0, 12) };
+  const gojo = gojoVisionSpend(cycleStart(now));
+  const leftCredits = CREDITS.monthly - spent(rows, cycleStart(now)) - (gojo ? gojo.usd : CREDITS.monthly) - gojoReserve(now);
+  const runCap = Math.min(num(a['max-usd'], CAPS.run), CAPS.run, leftCycle, leftDay, leftCredits);
+  const plan = { seat: a.seat, model, effort, tools, cwd, max_usd: Number(runCap.toFixed(2)), left_cycle: Number(leftCycle.toFixed(2)), left_day: Number(leftDay.toFixed(2)), left_credits_after_gojo_reserve: Number(leftCredits.toFixed(2)), charter_sha256: ch.sha256.slice(0, 12) };
   if (runCap < MIN_RUN_USD) die(`budget refuses the run: ${JSON.stringify(plan)}`, 3);
   if (a['dry-run']) { console.log(JSON.stringify({ dryRun: true, ...plan })); return; }
 

@@ -15,7 +15,7 @@ node run-seat.mjs status                                        # this cycle's s
 session limit, the weekly limit or "out of usage credits", the integrator runs the same brief here in the background,
 and returns to the subscription at the next reset. One brief file per seat, so either lane can run it.
 
-**Budget.** `API_AGENTS_MONTHLY_USD` (50), `API_AGENTS_DAILY_USD` (15), `API_AGENTS_RUN_USD` (6). Each run gets
+**Budget.** `API_AGENTS_MONTHLY_USD` (150, Kyle 10-12: "until gojo is trading better than me"), `API_AGENTS_DAILY_USD` (50), `API_AGENTS_RUN_USD` (10), and never into the reserve that keeps Gojo's chart reads funded to the cycle end ($4 per trading day left). Each run gets
 `maxBudgetUsd = min(run cap, left today, left this cycle)` and the SDK stops it there. Gojo's own learning reads draw on
 the same credits and come first (CEO-114). Ledger: `~/.local/gojo-integrator/api-agents-ledger.jsonl`; transcripts:
 `/Volumes/GojoData/gojo/api-agents/runs/`.
