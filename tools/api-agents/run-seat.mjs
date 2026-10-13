@@ -4,9 +4,10 @@
  * (Kyle's Max-plan API credits, org "Sr's Individual Org"), never to the Claude subscription.
  *
  * Why it exists (Kyle, 2026-10-12): "if you can make agents that can use our api agents that would be helpful and
- * they can switch between usage and api credits since this will be monthly". The subscription seats (IDE Agent tool)
- * stop when a 5-hour window, the weekly limit or the Fable credits run out; this runner is the overflow lane that keeps
- * a seat working on the API credits instead. The Max-plan credits cover the Claude API and the Claude Agent SDK, not
+ * they can switch between usage and api credits since this will be monthly". Kyle, 2026-10-13 00:0x: "run our api's
+ * until we hit the 150$ limit they are always to be used first" — so this runner is the FIRST lane for every agent
+ * seat, and the subscription (IDE Agent tool, workflows) is the overflow once the agents' cycle cap is reached (or for a
+ * job the API lane cannot run). The Max-plan credits cover the Claude API and the Claude Agent SDK, not
  * Claude Code sessions, which is why this is built on the Agent SDK and refuses to run unless the SDK reports
  * apiKeySource = ANTHROPIC_API_KEY.
  *
@@ -20,8 +21,9 @@
  *   node run-seat.mjs status
  *
  * Budget (USD, env-overridable): API_AGENTS_MONTHLY_USD (default 150, Kyle 10-12) per credit cycle (cycles start on the 2nd, the day
- * the monthly credit lands), API_AGENTS_DAILY_USD (50), API_AGENTS_RUN_USD (10), and never into the reserve that keeps Gojo's
- * chart reads funded to the cycle end ($4 per trading day left). The SDK gets
+ * the monthly credit lands), API_AGENTS_DAILY_USD (default = the cycle cap: no separate daily brake, Kyle 10-13 "until we
+ * hit the 150$ limit"), API_AGENTS_RUN_USD (10), and never into the reserve that keeps Gojo funded to the cycle end
+ * (per trading day left: max($4, his peak day of the last 10)). The SDK gets
  * maxBudgetUsd = min(run cap, what is left today, what is left this cycle) and stops the run itself at that figure.
  * Gojo's own learning (chart reads, planner) draws on the same credits and comes first (CEO-114); the agent cap is the
  * share the agents may take.
@@ -56,7 +58,8 @@ const num = (v, d) => (v !== undefined && v !== '' && Number.isFinite(Number(v))
 // Kyle, 2026-10-12 21:2x: "no until gojo is trading better than me make the api cap 150$ and get those api agents to work now".
 const CAPS = {
   monthly: num(process.env.API_AGENTS_MONTHLY_USD, 150),
-  daily: num(process.env.API_AGENTS_DAILY_USD, 50),
+  // Kyle 10-13 00:0x: "run our api's until we hit the 150$ limit" — no separate daily brake by default.
+  daily: num(process.env.API_AGENTS_DAILY_USD, num(process.env.API_AGENTS_MONTHLY_USD, 150)),
   run: num(process.env.API_AGENTS_RUN_USD, 10),
 };
 // The credits are shared with Gojo's own learning (CEO-114: Gojo first). The agents never spend into the reserve that keeps

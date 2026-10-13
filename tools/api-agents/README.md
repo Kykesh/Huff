@@ -11,11 +11,12 @@ node run-seat.mjs run --seat <seat> --brief <file.md> [--cwd <worktree>] [--mode
 node run-seat.mjs status                                        # this cycle's spend: agents + Gojo's chart reads
 ```
 
-**When to use it (the switch).** Seats run on the subscription through the IDE Agent tool. When a launch dies with a
-session limit, the weekly limit or "out of usage credits", the integrator runs the same brief here in the background,
-and returns to the subscription at the next reset. One brief file per seat, so either lane can run it.
+**When to use it (the switch).** FIRST, always. Kyle, 2026-10-13 00:0x: *"run our api's until we hit the 150$ limit
+they are always to be used first."* Every agent seat runs here until the agents' cycle cap is reached; only then (or for
+a job this lane cannot run, e.g. a multi-agent workflow) does work move to the subscription (IDE Agent tool). The cycle
+restarts on the 2nd. One brief file per seat, so either lane can run it.
 
-**Budget.** `API_AGENTS_MONTHLY_USD` (150, Kyle 10-12: "until gojo is trading better than me"), `API_AGENTS_DAILY_USD` (50), `API_AGENTS_RUN_USD` (10), and never into the reserve that keeps Gojo funded to the cycle end: per trading day left, the larger of $4 (the vision cap) and his highest day of the last 10. Gojo's spend is read-only from prod: every surface from `anthropic_usage` once the CEO-114 ledger is promoted, chart reads before that (F-1081). Gojo's own guard stops at $198 of the grant; the agents stop first. Each run gets
+**Budget.** `API_AGENTS_MONTHLY_USD` (150, Kyle 10-12: "until gojo is trading better than me"), `API_AGENTS_DAILY_USD` (default = the cycle cap — no separate daily brake, Kyle 10-13), `API_AGENTS_RUN_USD` (10), and never into the reserve that keeps Gojo funded to the cycle end: per trading day left, the larger of $4 (the vision cap) and his highest day of the last 10. Gojo's spend is read-only from prod: every surface from `anthropic_usage` once the CEO-114 ledger is promoted, chart reads before that (F-1081). Gojo's own guard stops at $198 of the grant; the agents stop first. Each run gets
 `maxBudgetUsd = min(run cap, left today, left this cycle)` and the SDK stops it there. Gojo's own learning reads draw on
 the same credits and come first (CEO-114). Ledger: `~/.local/gojo-integrator/api-agents-ledger.jsonl`; transcripts:
 `/Volumes/GojoData/gojo/api-agents/runs/`.
