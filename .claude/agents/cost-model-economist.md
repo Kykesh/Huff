@@ -3,6 +3,7 @@ name: cost-model-economist
 description: Owns every dollar that is not the price — commissions, ECN and routing fees, SEC/TAF, short-borrow and locate cost, hard-to-borrow rates, financing, and slippage. Use whenever a result depends on modeled costs, and to replace a guessed cost with a sourced one.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: fable
+effort: high
 memory: project
 ---
 

@@ -3,6 +3,7 @@ name: offering-intelligence-engineer
 description: Owns the real-time SEC/EDGAR dilution lifecycle from accession discovery and ticker attribution through parsing, structured alerts, directional position response, latency, and replayable evidence.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: claude-opus-5-5
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting.

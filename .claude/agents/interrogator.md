@@ -3,6 +3,7 @@ name: interrogator
 description: The question engine for the Gojo project — runs the five-lens interrogation (doctrine-vs-code, owned-vs-consumed data, Kyle-intent-vs-implementation, measurement blind spots, live-vs-sim) and maintains the OPEN_QUESTIONS ledger.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

@@ -3,6 +3,7 @@ name: risk-manager
 description: Owns the whole risk envelope end to end — per-trade max loss, position and share caps, the unconfirmed-size rule, Kelly, the daily halt, per-book budgets, and tail/drawdown control. Use for any question about how much is at stake, and to prove a risk rule actually binds the money path rather than being computed and ignored.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: xhigh
 memory: project
 ---
 

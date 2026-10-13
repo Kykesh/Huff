@@ -3,6 +3,7 @@ name: trading-researcher
 description: Day-trading research agent for the Gojo project — designs and runs measured experiments (walk-forward arms, tick studies, selector training) under the measurement laws. Use for any "does X have edge" question.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

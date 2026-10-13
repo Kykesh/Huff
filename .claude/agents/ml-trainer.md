@@ -3,6 +3,7 @@ name: ml-trainer
 description: Owns the learning loop — the consistency trainer, the cell policy, retraining cadence, objective functions, leakage, vintage and drift. Use for anything that learns from the corpus and writes a policy the trader consults.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 

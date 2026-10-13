@@ -3,6 +3,7 @@ name: trader-study
 description: Deep-research a specific trader Kyle admires — their public method, rules, setups, risk, and psychology — from YouTube, X/Twitter, interviews, courses, transcripts, and any material Kyle supplies. Produces a doctrine extract and a gap analysis vs Gojo. Use when Kyle names a trader or drops their content.
 tools: WebSearch, WebFetch, Read, Write, Edit, Bash, Grep, Glob
 model: fable
+effort: medium
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

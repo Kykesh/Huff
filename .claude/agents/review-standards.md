@@ -3,6 +3,7 @@ name: review-standards
 description: Code review lens (CEO-96) - the house engineering standard Kyle agreed to. Python for money and math, the register chain, observe-first OFF flags, docs kept current in the same packet, the house idiom and no dead code.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

@@ -3,6 +3,7 @@ name: runtime-safety-engineer
 description: Owns process and money-path reliability: feed heartbeats/reconnects, scheduler leases, atomic position journals, restart hydration, kill switches, book isolation, and failure injection.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: claude-opus-5-5
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting.

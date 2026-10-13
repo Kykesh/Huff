@@ -3,6 +3,7 @@ name: review-safety
 description: Code review lens (CEO-96) - money path and runtime safety. Covers never fail closed, book isolation, durable writes, rollback, live-replay parity, no leaked provider text or secrets, and promote-gate integrity.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

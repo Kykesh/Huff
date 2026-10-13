@@ -2,7 +2,8 @@
 name: release-integrator
 description: Owns the integration boundary — the shared index and working tree, cross-lane collisions, merges, the promote gates, and the contract with Codex's isolated review checkouts. Use when lanes must land work concurrently, when a commit boundary needs enforcing, and before anything reaches the frozen trader.
 tools: Bash, Read, Write, Edit, Grep, Glob
-model: fable
+model: claude-opus-5-5
+effort: high
 memory: project
 ---
 

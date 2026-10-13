@@ -3,6 +3,7 @@ name: live-readiness
 description: Owns readiness for real money — broker integration, locates and borrow, order routing, failure modes, reconciliation, kill switches. Use for anything touching the path from paper to a funded account.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

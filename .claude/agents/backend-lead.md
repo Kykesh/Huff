@@ -3,6 +3,7 @@ name: backend-lead
 description: Backend lead — owns the whole server side end to end: the realtime engine, data layer, APIs, execution path, schedulers, and the live/backtest parity contract. Use for architecture calls, cross-cutting server work, or when a change spans several backend areas.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

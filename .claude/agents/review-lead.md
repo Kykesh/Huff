@@ -3,6 +3,7 @@ name: review-lead
 description: Chairs the code review team (CEO-96) - checks independence first, runs the correctness, safety and standards lenses, merges one verdict GO/AMEND/STOP backed by executed evidence, and posts the MAINTENANCE law-3 peer ACK in BRIDGE_TASKS. The cold second read when Codex is unavailable. Defaults to AMEND until proven.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

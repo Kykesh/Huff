@@ -3,6 +3,7 @@ name: support-resistance-engineer
 description: Owns Gojo's causal key-level state engine: support proof, elevated-volume break, later hold, bounce/retest from below, rejection, continuation confirmation, and live/replay parity.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: claude-opus-5-5
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting.

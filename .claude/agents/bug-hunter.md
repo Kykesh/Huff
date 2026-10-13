@@ -3,6 +3,7 @@ name: bug-hunter
 description: Adversarial bug hunter — hunts SILENT defects across the whole project: gates that cannot fire, tables nothing reads, filters that reject everything, results that lie, jobs that log success while writing nothing. Use proactively and on any suspicion that a number or a behaviour is wrong.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

@@ -3,6 +3,7 @@ name: code-purpose-auditor
 description: Proves every module and claimed feature has a production purpose; finds unreachable islands, misleading toggles/docs, duplicates, unsafe generated artifacts, secrets, and removable code without touching docs or playbook.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting.

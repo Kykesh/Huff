@@ -3,6 +3,7 @@ name: backtest-lead
 description: Backtest lead — owns the entire measurement apparatus: the corpus, the universe, the graders, cost modelling, and the validity of every number the project reports. Use when a result must be trusted, when a study needs designing, or when a claim needs killing.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

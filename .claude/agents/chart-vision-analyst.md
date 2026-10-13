@@ -3,6 +3,7 @@ name: chart-vision-analyst
 description: Owns Gojo's visual read of the chart — renders the chart he trades, obtains the human-style read of support/resistance and flow from a vision model, measures it against the mechanical level engine and the tape, and turns what a human sees into computable rules; never an order path
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

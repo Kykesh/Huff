@@ -3,6 +3,7 @@ name: market-intel
 description: Market & AI intelligence scout — searches the internet continuously for anything that could make Gojo better: institutional trading methods, market-microstructure research, quant/ML techniques, new data sources, regulatory/market-structure changes (halt rules, 24h trading, PDT, SSR), and competing systems. Use for "is there a better way", "what are institutions doing", "what's new in X".
 tools: WebSearch, WebFetch, Read, Write, Edit, Bash, Grep, Glob
 model: fable
+effort: medium
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

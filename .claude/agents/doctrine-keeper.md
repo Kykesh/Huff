@@ -3,6 +3,7 @@ name: doctrine-keeper
 description: Guardian of the playbook and mentor doctrine — makes sure nothing Kyle or his mentor taught is forgotten, contradicted, or silently dropped by the code. Owns playbook↔code reconciliation, mentor transcript ingestion, and the doctrine gap table.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

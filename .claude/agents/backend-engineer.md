@@ -3,6 +3,7 @@ name: backend-engineer
 description: Backend agent for trading_personal — Next.js API routes, SQLite data layer, realtime engine, scripts. Use for server-side builds and data plumbing on the Gojo project.
 tools: Bash, Read, Write, Edit, Grep, Glob
 model: claude-opus-5-5
+effort: xhigh
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.

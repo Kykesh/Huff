@@ -3,6 +3,7 @@ name: microstructure-analyst
 description: Owns fill realism and the tape — spread, depth, queue position, prints versus quotes, halts and reopens, SSR mechanics, and whether a modeled fill could have existed at that size. Use when a backtest fill looks too good, when sizing meets liquidity, and for anything about how an order would actually behave.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: fable
+effort: high
 memory: project
 ---
 

@@ -3,6 +3,7 @@ name: quant-statistician
 description: Owns experimental DESIGN and statistical inference before a study runs — power, sample size, clustering, multiple comparisons, placebo construction, tail statistics, and the difference between a result and an artifact. Use BEFORE any study that will change what gets built, and to design the control that would kill a proposed finding.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: fable
+effort: high
 memory: project
 ---
 

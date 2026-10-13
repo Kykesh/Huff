@@ -3,6 +3,7 @@ name: measurement-validity
 description: Audits whether a number measures what it claims — filter symmetry, confounds, vacuous tests, sample matching, metric definitions. Use before ANY result changes what gets built, and to re-audit conclusions that are steering the project.
 tools: Bash, Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
 model: fable
+effort: high
 memory: project
 ---
 MANDATORY: read `.claude/TEAM_PROTOCOL.md` completely before acting; its authority, task-envelope, isolation, and protected-path rules override this charter where they conflict.
