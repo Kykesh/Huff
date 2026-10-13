@@ -60,7 +60,8 @@ const CAPS = {
   run: num(process.env.API_AGENTS_RUN_USD, 10),
 };
 // The credits are shared with Gojo's own learning (CEO-114: Gojo first). The agents never spend into the reserve that keeps
-// Gojo's chart reads funded to the end of the cycle: $4 per trading day left (the merged vision USD cap's default).
+// Gojo funded to the end of the cycle: per trading day left, max($4 — the merged vision USD cap — and his peak day of
+// the last 10), read from prod's anthropic_usage once the CEO-114 ledger is there (F-1081).
 const CREDITS = { monthly: num(process.env.API_CREDITS_USD, 200), gojoPerTradingDay: num(process.env.API_GOJO_RESERVE_PER_TRADING_DAY, 4) };
 const MIN_RUN_USD = 0.5;
 
@@ -104,12 +105,14 @@ export function cycleStart(now = new Date()) {
   if (now < s) s.setMonth(s.getMonth() - 1);
   return s;
 }
-/** Trading days (Mon–Fri) from tomorrow to the next cycle start — what Gojo's reads still need. */
-export function gojoReserve(now = new Date()) {
+/** Trading days (Mon–Fri) from tomorrow to the next cycle start — what Gojo's reads still need. F-1081: the per-day
+ *  reserve is the larger of the floor ($4, the vision cap) and Gojo's highest measured day of the last 10, so a Gojo
+ *  that spends more (Fable planning switched on) grows his own reserve instead of being squeezed by the agents. */
+export function gojoReserve(now = new Date(), perDay = CREDITS.gojoPerTradingDay) {
   const end = cycleStart(now); end.setMonth(end.getMonth() + 1);
   let d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); let n = 0;
   for (; d < end; d.setDate(d.getDate() + 1)) if (d.getDay() !== 0 && d.getDay() !== 6) n++;
-  return n * CREDITS.gojoPerTradingDay;
+  return n * Math.max(CREDITS.gojoPerTradingDay, perDay || 0);
 }
 function dayStart(now = new Date()) { return new Date(now.getFullYear(), now.getMonth(), now.getDate()); }
 
@@ -123,13 +126,25 @@ function ledgerRows() {
 }
 export function spent(rows, since) { return rows.filter((r) => new Date(r.ts) >= since).reduce((s, r) => s + (Number(r.cost_usd) || 0), 0); }
 
-function gojoVisionSpend(since) {
+const sq = (sql) => execFileSync('/usr/bin/sqlite3', ['-readonly', PROD_DB, sql], { encoding: 'utf8', timeout: 10_000 }).trim();
+const utc = (d) => d.toISOString().replace('T', ' ').slice(0, 19);
+
+/** Everything Gojo has spent on the API since `since`, read-only from prod (F-1081). Once the CEO-114 ledger
+ *  (`anthropic_usage`, every surface) exists it is the total; chart_vision_reads covers only the time before its first
+ *  row. `peakDay` is his highest day of the last 10 — it sizes the reserve. null = unreadable (callers refuse). */
+function gojoSpend(since, now = new Date()) {
   try {
-    const out = execFileSync('/usr/bin/sqlite3', ['-readonly', PROD_DB,
-      `select coalesce(round(sum(cost_usd),4),0), count(*) from chart_vision_reads where created_at >= '${since.toISOString().replace('T', ' ').slice(0, 19)}';`],
-    { encoding: 'utf8', timeout: 10_000 }).trim();
-    const [usd, n] = out.split('|');
-    return { usd: Number(usd), reads: Number(n) };
+    const hasLedger = sq(`select count(*) from sqlite_master where type='table' and name='anthropic_usage';`) === '1';
+    const first = hasLedger ? sq(`select coalesce(min(created_at),'') from anthropic_usage;`) : '';
+    const visionUntil = first ? ` and created_at < '${first}'` : '';
+    const [vUsd, vN] = sq(`select coalesce(round(sum(cost_usd),4),0), count(*) from chart_vision_reads where created_at >= '${utc(since)}'${visionUntil};`).split('|');
+    let lUsd = 0, lN = 0;
+    if (first) [lUsd, lN] = sq(`select coalesce(round(sum(usd_est),4),0), count(*) from anthropic_usage where created_at >= '${utc(since)}' and status <> 'refused';`).split('|');
+    const tenAgo = utc(new Date(now.getTime() - 10 * 86_400_000));
+    const days = sq(`select d, sum(u) from (select date(created_at) d, cost_usd u from chart_vision_reads where created_at >= '${tenAgo}'${visionUntil}`
+      + (first ? ` union all select date(created_at), usd_est from anthropic_usage where created_at >= '${tenAgo}' and status <> 'refused'` : '')
+      + `) group by d;`).split('\n').filter(Boolean).map((l) => Number(l.split('|')[1]) || 0);
+    return { usd: Number(vUsd) + Number(lUsd), calls: Number(vN) + Number(lN), ledger: Boolean(first), peakDay: days.length ? Math.max(...days) : 0 };
   } catch { return null; }
 }
 
@@ -137,12 +152,12 @@ function status() {
   const rows = ledgerRows();
   const now = new Date(); const cs = cycleStart(now); const ds = dayStart(now);
   const cyc = spent(rows, cs); const day = spent(rows, ds);
-  const gojo = gojoVisionSpend(cs);
+  const gojo = gojoSpend(cs, now);
   console.log(`credit cycle since ${cs.toDateString()} (credits land on the 2nd)`);
   console.log(`  agents on API:    $${cyc.toFixed(2)} of $${CAPS.monthly} this cycle · $${day.toFixed(2)} of $${CAPS.daily} today · ${rows.filter((r) => new Date(r.ts) >= cs).length} runs`);
-  console.log(gojo ? `  Gojo chart reads: $${gojo.usd.toFixed(2)} (${gojo.reads} reads) — prod, read-only` : '  Gojo chart reads: prod DB unreadable');
-  console.log('  Gojo planner:     not ledgered on prod until the CEO-114 spend guard is promoted');
-  console.log(`  reserve kept for Gojo's reads to the cycle end: $${gojoReserve(now).toFixed(2)} of the $${CREDITS.monthly} credits`);
+  console.log(gojo ? `  Gojo on API:      $${gojo.usd.toFixed(2)} (${gojo.calls} calls; ${gojo.ledger ? 'every surface, from anthropic_usage' : 'chart reads only — the CEO-114 ledger is not on prod yet'}) — prod, read-only`
+    : '  Gojo on API:      prod DB unreadable — every run refuses until it reads');
+  console.log(`  reserve kept for Gojo to the cycle end: $${gojoReserve(now, gojo?.peakDay).toFixed(2)} (per trading day: max($${CREDITS.gojoPerTradingDay}, his peak day of the last 10 = $${(gojo?.peakDay ?? 0).toFixed(2)}))`);
 }
 
 async function run(a) {
@@ -160,8 +175,8 @@ async function run(a) {
   const rows = ledgerRows(); const now = new Date();
   const leftCycle = CAPS.monthly - spent(rows, cycleStart(now));
   const leftDay = CAPS.daily - spent(rows, dayStart(now));
-  const gojo = gojoVisionSpend(cycleStart(now));
-  const leftCredits = CREDITS.monthly - spent(rows, cycleStart(now)) - (gojo ? gojo.usd : CREDITS.monthly) - gojoReserve(now);
+  const gojo = gojoSpend(cycleStart(now), now);
+  const leftCredits = CREDITS.monthly - spent(rows, cycleStart(now)) - (gojo ? gojo.usd : CREDITS.monthly) - gojoReserve(now, gojo?.peakDay);
   const runCap = Math.min(num(a['max-usd'], CAPS.run), CAPS.run, leftCycle, leftDay, leftCredits);
   const plan = { seat: a.seat, model, effort, tools, cwd, max_usd: Number(runCap.toFixed(2)), left_cycle: Number(leftCycle.toFixed(2)), left_day: Number(leftDay.toFixed(2)), left_credits_after_gojo_reserve: Number(leftCredits.toFixed(2)), charter_sha256: ch.sha256.slice(0, 12) };
   if (runCap < MIN_RUN_USD) die(`budget refuses the run: ${JSON.stringify(plan)}`, 3);
