@@ -57,9 +57,11 @@ const KNOWN_TOOLS = new Set(['Bash', 'Read', 'Write', 'Edit', 'Grep', 'Glob', 'W
 const num = (v, d) => (v !== undefined && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d);
 // Kyle, 2026-10-12 21:2x: "no until gojo is trading better than me make the api cap 150$ and get those api agents to work now".
 const CAPS = {
-  monthly: num(process.env.API_AGENTS_MONTHLY_USD, 150),
+  // Kyle 2026-10-13 07:2x (CEO-119): "let the api agents use all the api credits" — the agents' cap is the whole grant;
+  // the only thing held back is Gojo's own reserve (CEO-114: his learning reads must not starve).
+  monthly: num(process.env.API_AGENTS_MONTHLY_USD, num(process.env.API_CREDITS_USD, 200)),
   // Kyle 10-13 00:0x: "run our api's until we hit the 150$ limit" — no separate daily brake by default.
-  daily: num(process.env.API_AGENTS_DAILY_USD, num(process.env.API_AGENTS_MONTHLY_USD, 150)),
+  daily: num(process.env.API_AGENTS_DAILY_USD, num(process.env.API_AGENTS_MONTHLY_USD, num(process.env.API_CREDITS_USD, 200))),
   run: num(process.env.API_AGENTS_RUN_USD, 10),
 };
 // The credits are shared with Gojo's own learning (CEO-114: Gojo first). The agents never spend into the reserve that keeps
