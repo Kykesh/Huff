@@ -46,6 +46,7 @@ const TRADING = path.join(HUFF, 'Gojo', 'trading_personal');
 const AGENTS_DIR = path.join(HUFF, '.claude', 'agents');
 const ENV_FILE = path.join(TRADING, '.env.local');
 const PROD_DB = path.join(HUFF, 'Gojo', 'gojo_prod', 'data', 'trading.db');
+const MEMORY_HOME = path.join(TRADING, '.claude', 'agent-memory');
 const LEDGER = path.join(os.homedir(), '.local', 'gojo-integrator', 'api-agents-ledger.jsonl');
 const RUNS_DIR = fs.existsSync('/Volumes/GojoData/gojo') ? '/Volumes/GojoData/gojo/api-agents/runs'
   : path.join(os.homedir(), '.local', 'gojo-integrator', 'api-agents-runs');
@@ -194,6 +195,11 @@ async function run(a) {
   const env = Object.fromEntries(['PATH', 'HOME', 'USER', 'LOGNAME', 'SHELL', 'LANG', 'LC_ALL', 'TMPDIR', 'TERM']
     .filter((k) => process.env[k] !== undefined).map((k) => [k, process.env[k]]));
   Object.assign(env, { ANTHROPIC_API_KEY: apiKey(), CLAUDE_CONFIG_DIR: CONFIG_DIR, CLAUDE_AGENT_SDK_CLIENT_APP: 'gojo-api-agents/1.0' });
+  // ONE memory store (Kyle 10-13: "make sure our agents even though they're api's they are still using our memory the way
+  // it's supposed to be used we dont want wasted work"). scripts/gojo/agent-memory.mjs resolves its home from the checkout
+  // it runs in, so a seat working in a lane worktree wrote its rows into <worktree>/.claude/agent-memory — stranded (36 rows
+  // rescued 10-13 by ~/.local/gojo-integrator/memory-rescue.py). These pin every call, from any worktree, to the canonical store.
+  Object.assign(env, { AGENT_MEMORY_HOME: MEMORY_HOME, AGENT_MEMORY_WORKSPACE: HUFF });
 
   fs.mkdirSync(RUNS_DIR, { recursive: true }); fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
   // pid in the name: two runs of one seat launched in the same millisecond must not share a transcript (seen 2026-10-13).
@@ -203,6 +209,11 @@ async function run(a) {
   const appendix = `\n\n# You are running as the ${a.seat} seat on the API-credit lane (Huff/tools/api-agents/run-seat.mjs).\n`
     + `The run is capped at $${plan.max_usd} of Kyle's API credits and stops when that is spent, so commit and push every verified step as soon as it is green. `
     + 'Tool calls are vetted by the auto-mode classifier; a call it cannot clear is denied — take the safer route and continue.\n\n'
+    + '## Memory — mandatory, not optional (Kyle 2026-10-13: "we dont want wasted work")\n'
+    + `AGENT_MEMORY_HOME and AGENT_MEMORY_WORKSPACE are already set in your environment to THE one store, so the memory tool writes there from any worktree. Writing memory through the tool is REQUIRED and is NOT "touching the shared checkout" (the store is gitignored).\n`
+    + `1. FIRST, before any work: node ${TRADING}/scripts/gojo/agent-memory.mjs recall ${a.seat} "<your task in a few words>" --k 12 (add --lane <branch> and --files <paths> when you know them), and read docs/AGENT_LESSONS.md for your seat. Use what you recall; do not redo work your seat already did.\n`
+    + `2. DURING: when you learn something a future run of your seat must not re-learn (a trap, a measured fact, a how-to, a ruling), remember it at once: node ${TRADING}/scripts/gojo/agent-memory.mjs remember ${a.seat} --kind procedural|semantic|episodic --scope private --title "..." --body "..." --n <evidence count> --source <a file that exists> --provenance measured|derived|ruled --lane <branch>.\n`
+    + `3. LAST, before your final ledger: remember the run's outcome (episodic: branch@sha, what is FIXED/HOLD, what the next run must do), then node ${TRADING}/scripts/gojo/agent-memory.mjs lane-end ${a.seat} <branch>. Seat notebook .md files under .claude/agent-memory/<seat>/ are committed IN YOUR LANE (they land with the merge) — never written into the shared checkout.\n\n`
     + ch.body;
 
   let result = null; let source = null; let refusedAuth = false;
