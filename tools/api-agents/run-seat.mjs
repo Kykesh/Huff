@@ -194,7 +194,8 @@ async function run(a) {
   Object.assign(env, { ANTHROPIC_API_KEY: apiKey(), CLAUDE_CONFIG_DIR: CONFIG_DIR, CLAUDE_AGENT_SDK_CLIENT_APP: 'gojo-api-agents/1.0' });
 
   fs.mkdirSync(RUNS_DIR, { recursive: true }); fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
-  const transcript = path.join(RUNS_DIR, `${now.toISOString().replace(/[:.]/g, '-')}-${a.seat}.jsonl`);
+  // pid in the name: two runs of one seat launched in the same millisecond must not share a transcript (seen 2026-10-13).
+  const transcript = path.join(RUNS_DIR, `${now.toISOString().replace(/[:.]/g, '-')}-${a.seat}-${process.pid}.jsonl`);
   const tout = fs.createWriteStream(transcript, { flags: 'a' });
   const abort = new AbortController();
   const appendix = `\n\n# You are running as the ${a.seat} seat on the API-credit lane (Huff/tools/api-agents/run-seat.mjs).\n`
