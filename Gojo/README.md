@@ -50,12 +50,22 @@ production, or run `git add .` from the `Huff` repository.
 
 ## Current documentation for every Gojo environment
 
+Start with the October4 [complete Git-visible file/folder lookup](trading_personal/docs/structure/current/README.md)
+and [physical folder boundaries](trading_personal/docs/structure/current/ROOTS.md).
+These distinguish current checkout membership from historical semantic reviews,
+ignored/private payloads, installed state and release acceptance.
+
+The [project asset register](trading_personal/docs/structure/current/assets/README.md)
+adds physical accounting beyond Git: ignored/hidden files, empty folders, SSD
+datasets, retained candidates, core/main and shared configuration, with explicit
+ownership routes and backup/recovery gaps. It is not a backup or cleanup license.
+
 The [environment documentation hub](trading_personal/docs/structure/environments/README.md)
 provides the full, separately versioned sets:
 
 - [Development: current project index](trading_personal/docs/DOCS_INDEX.md).
-- [Stage: architecture, code map, ownership and file catalog](trading_personal/docs/structure/environments/stage/DOCS_INDEX.md).
-- [Production: architecture, code map, ownership and file catalog](trading_personal/docs/structure/environments/production/DOCS_INDEX.md).
+- [Stage: current identity, catalog and links to dated deep guides](trading_personal/docs/structure/current/STAGE.md).
+- [Production: current identity, catalog and links to dated deep guides](trading_personal/docs/structure/current/PRODUCTION.md).
 
 These role-specific guides are maintained centrally in the working documentation.
 They describe the actual versions inspected, not three identical environments.

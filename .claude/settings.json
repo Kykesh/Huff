@@ -9,8 +9,24 @@
       "Write(//Users/kylehuffsr./Documents/GitHub/Huff/Gojo/trading_personal/docs/PROMOTE_STOP.json)",
       "Bash(npm run gojo:promote:*)",
       "Bash(node scripts/gojo/promote.mjs:*)",
-      "Bash(curl -s -X POST http://localhost:3008/api/settings/flags:*)"
-
+      "Bash(curl -s -X POST http://localhost:3008/api/settings/flags:*)",
+      "Bash(cp /Volumes/GojoData/gojo/worktrees/qa-scratch-0930/L11.spec.json docs/measurements/loops/qa-python-first-stack-2026-10-01.spec.jsonc)",
+      "Bash(echo \"- L11 \\\\`qa-python-first-stack\\\\` — **PASS 1/10** at \\\\`ad0d4da\\\\` \\(receipt \\\\`qa-python-first-stack-2026-10-01.json\\\\`\\): preflight RED on HEAD \\(the goal's module absent\\), all four mutations RED and restored.\")",
+      "Bash(DB_NO_MAINTENANCE=1 nice npx vitest run src/lib/db-plan-replace.author.t009.test.ts --maxWorkers=2 --minWorkers=1)",
+      "Bash(DB_NO_MAINTENANCE=1 node scripts/gojo/agent-memory.mjs remember backend-engineer --kind procedural --scope private --title \"F-785 pattern: a catch that substitutes a default publishes a guess as a reading\" --body \"runtime-flags listRuntimeFlags caught a throwing getter and returned shipsOn with no marker; the UI then showed ACTIVE / all-defaults. Fix shape that worked: nullable value + readStatus + short error code + stored-vs-effective read separately \\(storedStatus set/unset/column_absent/unknown\\). The db.ts getters never throw on an ABSENT column \\(SELECT * + ==null default\\), so the catch was only ever a real read failure. UI tests that mock SWR never run the fetcher: mutant 'fetcher ignores HTTP status' SURVIVED until a direct fetcher test was added. CHECK: for every UI fix behind a mocked data hook, mutate the fetcher too. Seam: vi.spyOn\\(findRuntimeFlag\\(id\\)!, 'read'\\) makes one getter throw against the isolated DB.\" --n 6 --source /Volumes/GojoData/gojo/worktrees/diag-f785/src/lib/trading/runtime-flags.ts --provenance measured --lane diag-f785 --files src/lib/trading/runtime-flags.ts,src/components/RuntimeFlagsCard.tsx)",
+      "Bash(DB_NO_MAINTENANCE=1 node scripts/gojo/agent-memory.mjs lane-end backend-engineer diag-f785)",
+      "Bash(node scripts/gojo/agent-memory.mjs recall review-lead \"cold review F-785 runtime-flags failed read UNKNOWN stored vs effective RuntimeFlagsCard settings flags\" --lane diag/f785-1001 --files src/lib/trading/runtime-flags.ts,src/components/RuntimeFlagsCard.tsx,src/app/api/settings/flags/route.ts)",
+      "Bash(python3 /private/tmp/claude-501/-Users-kylehuffsr--Documents-GitHub-Huff/47a85c72-233e-4219-912d-4ab1a8319ec6/scratchpad/mutate.py M2 M7)",
+      "Bash(node -e 'let s=\"\";process.stdin.on\\(\"data\",d=>s+=d\\).on\\(\"end\",\\(\\)=>{const a=JSON.parse\\(s\\);for\\(const t of a.filter\\(t=>/review-\\(correctness|safety|standards\\)/.test\\(t.id\\)\\)\\)console.log\\(t.id,t.state,t.owner\\)}\\)')",
+      "Bash(SHOT_TAG=green nice -n 19 npx tsx docs/measurements/desk-levels/desk-stream.ts)",
+      "Bash(scripts/gojo/safe-commit.sh -m /private/tmp/claude-501/-Users-kylehuffsr--Documents-GitHub-Huff/47a85c72-233e-4219-912d-4ab1a8319ec6/scratchpad/msg-code.txt -p fd9543d0d --allow-add src/lib/runtime/heartbeat-alert-kinds.ts src/lib/runtime/heartbeat-feed.ts src/lib/runtime/heartbeat-feed-client.ts src/lib/runtime/heartbeat-feed.f795.test.ts src/lib/runtime/heartbeat.ts src/app/api/heartbeat/alerts/route.ts src/components/useHeartbeatFeed.ts src/components/HeartbeatIncidentBanner.tsx src/components/desk/TradingDesk.tsx src/components/RealtimePanel.tsx)",
+      "Bash(node measure-carry.cjs /Volumes/GojoData/gojo/scratch/f773/trading-copy.db)",
+      "Bash(until grep *)",
+      "Bash(DATABASE_PATH=/private/tmp/claude-501/-Users-kylehuffsr--Documents-GitHub-Huff/47a85c72-233e-4219-912d-4ab1a8319ec6/scratchpad/rs-f771-vitest.db DB_NO_MAINTENANCE=1 npx vitest run --maxWorkers=1 --minWorkers=1 src/lib/realtime/rs-probe-p1-refresh-storm.rs.test.ts)"
+    ],
+    "additionalDirectories": [
+      "/Volumes/GojoData/gojo/review/f787",
+      "/Volumes/GojoData/gojo/worktrees/qa-scratch-0930/replay/A"
     ]
   },
   "hooks": {
