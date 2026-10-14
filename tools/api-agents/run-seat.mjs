@@ -204,7 +204,10 @@ async function run(a) {
   // it's supposed to be used we dont want wasted work"). scripts/gojo/agent-memory.mjs resolves its home from the checkout
   // it runs in, so a seat working in a lane worktree wrote its rows into <worktree>/.claude/agent-memory — stranded (36 rows
   // rescued 10-13 by ~/.local/gojo-integrator/memory-rescue.py). These pin every call, from any worktree, to the canonical store.
-  Object.assign(env, { AGENT_MEMORY_HOME: MEMORY_HOME, AGENT_MEMORY_WORKSPACE: HUFF });
+  // NOT exported (F-1109, 2026-10-14): an exported AGENT_MEMORY_HOME made every full test suite a seat ran write into the
+  // real store (agent-memory.test.ts passes its env to the CLI and HOME wins over the test's scratch DB). The appendix gives
+  // the seat the explicit per-command prefix instead, so only the seat's own memory calls reach the canonical store.
+  Object.assign(env, { AGENT_MEMORY_WORKSPACE: HUFF });
 
   fs.mkdirSync(RUNS_DIR, { recursive: true }); fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
   // pid in the name: two runs of one seat launched in the same millisecond must not share a transcript (seen 2026-10-13).
@@ -215,10 +218,10 @@ async function run(a) {
     + `The run is capped at $${plan.max_usd} of Kyle's API credits and stops when that is spent, so commit and push every verified step as soon as it is green. `
     + 'Tool calls are vetted by the auto-mode classifier; a call it cannot clear is denied — take the safer route and continue.\n\n'
     + '## Memory — mandatory, not optional (Kyle 2026-10-13: "we dont want wasted work")\n'
-    + `AGENT_MEMORY_HOME and AGENT_MEMORY_WORKSPACE are already set in your environment to THE one store, so the memory tool writes there from any worktree. Writing memory through the tool is REQUIRED and is NOT "touching the shared checkout" (the store is gitignored).\n`
-    + `1. FIRST, before any work: node ${TRADING}/scripts/gojo/agent-memory.mjs recall ${a.seat} "<your task in a few words>" --k 12 (add --lane <branch> and --files <paths> when you know them), and read docs/AGENT_LESSONS.md for your seat. Use what you recall; do not redo work your seat already did.\n`
-    + `2. DURING: when you learn something a future run of your seat must not re-learn (a trap, a measured fact, a how-to, a ruling), remember it at once: node ${TRADING}/scripts/gojo/agent-memory.mjs remember ${a.seat} --kind procedural|semantic|episodic --scope private --title "..." --body "..." --n <evidence count> --source <a file that exists> --provenance measured|derived|ruled --lane <branch>.\n`
-    + `3. LAST, before your final ledger: remember the run's outcome (episodic: branch@sha, what is FIXED/HOLD, what the next run must do), then node ${TRADING}/scripts/gojo/agent-memory.mjs lane-end ${a.seat} <branch>. Seat notebook .md files under .claude/agent-memory/<seat>/ are committed IN YOUR LANE (they land with the merge) — never written into the shared checkout.\n\n`
+    + `Every memory call MUST carry the prefix AGENT_MEMORY_HOME=${MEMORY_HOME} (never export it: a test suite run with it exported writes into the real store — F-1109). With that prefix the tool writes to THE one store from any worktree. Writing memory through the tool is REQUIRED and is NOT "touching the shared checkout" (the store is gitignored).\n`
+    + `1. FIRST, before any work: AGENT_MEMORY_HOME=${MEMORY_HOME} node ${TRADING}/scripts/gojo/agent-memory.mjs recall ${a.seat} "<your task in a few words>" --k 12 (add --lane <branch> and --files <paths> when you know them), and read docs/AGENT_LESSONS.md for your seat. Use what you recall; do not redo work your seat already did.\n`
+    + `2. DURING: when you learn something a future run of your seat must not re-learn (a trap, a measured fact, a how-to, a ruling), remember it at once: AGENT_MEMORY_HOME=${MEMORY_HOME} node ${TRADING}/scripts/gojo/agent-memory.mjs remember ${a.seat} --kind procedural|semantic|episodic --scope private --title "..." --body "..." --n <evidence count> --source <a file that exists> --provenance measured|derived|ruled --lane <branch>.\n`
+    + `3. LAST, before your final ledger: remember the run's outcome (episodic: branch@sha, what is FIXED/HOLD, what the next run must do), then AGENT_MEMORY_HOME=${MEMORY_HOME} node ${TRADING}/scripts/gojo/agent-memory.mjs lane-end ${a.seat} <branch>. Seat notebook .md files under .claude/agent-memory/<seat>/ are committed IN YOUR LANE (they land with the merge) — never written into the shared checkout.\n\n`
     + ch.body;
 
   let result = null; let source = null; let refusedAuth = false;
