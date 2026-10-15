@@ -76,6 +76,12 @@ const CREDITS = { monthly: num(process.env.API_CREDITS_USD, 200), gojoPerTrading
 const MIN_RUN_USD = 0.5;
 
 function die(msg, code = 2) { console.error(`run-seat: ${msg}`); process.exit(code); }
+/** F-1390: a result is a billing refusal when the SDK flags it as an error and the text names the credit balance. */
+export function isBillingRefusal(result) {
+  if (!result) return false;
+  const text = String(result.result ?? result.error ?? '');
+  return Boolean(result.is_error) && /credit balance is too low/i.test(text);
+}
 
 function args(argv) {
   const out = { _: [] };
@@ -253,16 +259,20 @@ async function run(a) {
 
   const row = {
     ts: new Date().toISOString(), seat: a.seat, model, effort, cwd,
-    subtype: refusedAuth ? 'refused-not-api-key' : (result?.subtype ?? 'no-result'),
+    // F-1390 (B-660 chair, 10-15): the SDK reports a billing refusal as subtype 'success' WITH is_error:true
+    // ("Credit balance is too low") — that is a failed run, never a success; the resumer must not mark the seat done.
+    subtype: refusedAuth ? 'refused-not-api-key' : (isBillingRefusal(result) ? 'error-credit-balance' : (result?.is_error ? 'error-is_error' : (result?.subtype ?? 'no-result'))),
     cost_usd: Number(result?.total_cost_usd ?? 0), turns: result?.num_turns ?? null, session_id: result?.session_id ?? null,
     api_key_source: source, max_usd: plan.max_usd, charter_sha256: plan.charter_sha256,
     prompt_sha256: crypto.createHash('sha256').update(prompt).digest('hex').slice(0, 12), transcript,
   };
   fs.appendFileSync(LEDGER, `${JSON.stringify(row)}\n`);
   if (refusedAuth) die(`refused: the SDK authenticated with "${source}", not the Console API key — nothing was billed to the credits`, 4);
-  if (result?.subtype === 'success') console.log(result.result);
+  const ok = row.subtype === 'success';
+  if (ok) console.log(result.result);
   console.error(`run-seat: ${a.seat} ${row.subtype} · $${row.cost_usd.toFixed(4)} · ${row.turns} turns · ${model} @ ${effort} · transcript ${transcript}`);
-  process.exit(result?.subtype === 'success' ? 0 : 1);
+  // exit 5 = the Console grant is spent: callers (claude-resume.sh, the integrator) stop launching API seats until it refills
+  process.exit(ok ? 0 : (row.subtype === 'error-credit-balance' ? 5 : 1));
 }
 
 const a = args(process.argv.slice(2));
